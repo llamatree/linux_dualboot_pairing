@@ -4,6 +4,21 @@ import re
 # コマンドライン引数でレジストリファイルのパスを取得
 args = sys.argv
 
+# 引数未指定時のエラー処理
+try:
+    args[1]
+except IndexError:
+    print("ファイルが指定されていません")
+    exit(1)
+
+# 指定されたファイルがないときのエラー処理
+try:
+    open(args[1], "r", encoding="utf-16")
+except FileNotFoundError:
+    print("そのようなファイルは存在しません", "'", args[1], "'")
+    exit(1)
+
+
 # 第1引数のレジストリファイルパスを開く. レジストリファイルはUTF-16
 with open(args[1], "r", encoding="utf-16") as f:
     content = f.read()
@@ -32,6 +47,6 @@ with open(args[1], "r", encoding="utf-16") as f:
             case _:
                 pass
 # 結果を表示
-print(ltk)
-print(erand)
-print(ediv)
+print("LTK:", ltk)
+print("ERand:", erand)
+print("EDIV:", ediv)
